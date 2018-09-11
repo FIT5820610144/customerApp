@@ -30,6 +30,7 @@ export class HomePage {
    calculateAndDisplayRoute(clat,clng) {  
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
+    var firstPosition = {lat:clat,lng:clng};
     var distanced = this.distance
     console.log(distanced)
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -41,9 +42,13 @@ export class HomePage {
       streetView:false,
       disableDefaultUI: true
     });
+    var marker = new google.maps.Marker({
+      position: firstPosition,
+      map: map,
+      title: 'Hello World!'
+    });
 
     directionsDisplay.setMap(map);
-
     directionsService.route({
       origin: this.Start,
       destination: this.End,
@@ -55,7 +60,7 @@ export class HomePage {
         var getKm = getDistance/1000
         var km = getKm.toFixed(0);
         var defaultFare = 5;
-        distanced = km
+        //distanced = km
         
         var getFare = getKm * defaultFare;
         var fare = getFare.toFixed(0)
@@ -67,8 +72,7 @@ export class HomePage {
       } else {
         window.alert('ไม่สามารถค้นหาเส้นทางที่ท่านได้ระบุ ' + status);
       }
-    });
-        
+    }); 
   }
 
   ionViewDidLoad(){
