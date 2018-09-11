@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar color="namaeto">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>NAMAETO'
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card style="border-radius:10px;height: 30px">
+              <div style="margin-left:10px;margin-top:-5px">
+                  <ion-input type="text" placeholder="คุณอยู่ที่ไหน....." [(ngModel)]="Start"></ion-input>
+               </div>
+      </ion-card>
+      <ion-card style="border-radius:10px;height: 30px">
+          <div style="margin-left:10px;margin-top:-5px">
+              <ion-input type="text" placeholder="คุณจะไปไหน....." [(ngModel)]="End"></ion-input>
+           </div>
+      </ion-card>
+      <button id="mtBtn" ion-button full color="namaeto" (click)="calculateAndDisplayRoute();showTypefunc()" round>ตกลง</button>
+              <div #map id="map"></div>
+            <div *ngIf="showType">
+              <ion-grid>
+                <ion-row>
+                  <ion-card color="namaeto" style="border-radius:10px;margin-left: 15px;margin-top:10px;width: 100%;">
+                          <ion-grid>
+                            <ion-row style="font-size:15px">
+                              <ion-col>
+                                  <div id="distance"></div>
+                              </ion-col>
+                              <ion-col>
+                                <div style="margin-left: 30px" id="fare"></div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>  
+                      </ion-card>
+                </ion-row>
+                <ion-row style="margin-top:-10px">
+                <ion-col>
+                    <button ion-button color="namaeto" style="width: 50%" round text-center>
+                        <div style="width:500px;margin-right: -80px;">
+                                <ion-select [(ngModel)]="vehicle">
+                                <ion-option value="vin" selected>วิน</ion-option>
+                                <ion-option value="tuktuk">ตุ๊กตุ๊ก</ion-option>
+                              </ion-select>
+                              </div>
+                    </button>
+                  </ion-col>
+                  <ion-col>
+                    <div style="margin-left:-140px;font-size:20px">
+                      <button style="width:90%;" ion-button color="namaeto" round>เรียกรถ</button>
+                    </div>
+                </ion-col>
+              </ion-row>
+              </ion-grid>
+            </div>
+
+  <!--  <ion-item>
+        <ion-label></ion-label>
+        <ion-input id="txtHome" type="text" placeholder="สถานที่ของคุณ"></ion-input>
+    </ion-item>
+    <ion-icon name="ios-locate" (click)="goCurrentPosition()" style="font-size: 40px; "></ion-icon>
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+  </agm-map>
+
+ <ion-icon name="ios-locate" (click)="setCurrentPosition()" style="font-size: 40px; "></ion-icon>
+   <div #map id="map"></div> -->
+</ion-content>
