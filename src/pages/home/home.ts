@@ -45,7 +45,7 @@ export class HomePage {
     var marker = new google.maps.Marker({
       position: firstPosition,
       map: map,
-      title: 'Hello World!'
+      icon: 'assets/imgs/maker.gif',
     });
 
     directionsDisplay.setMap(map);

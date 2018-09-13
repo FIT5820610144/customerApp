@@ -6,6 +6,7 @@ import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
+import { IonicStorageModule } from '@ionic/storage';
 
 //---------pages--------
 
@@ -42,6 +43,7 @@ import { LoginProvider } from '../providers/login/login';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyBWSUebxgKZO0lx_cm7J8kkZT08NyA8hkk",
       libraries: ["places"]

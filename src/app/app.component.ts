@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -18,19 +19,21 @@ import { RegisterPage } from '../pages/register/register';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any, icon: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen,
+    private storage: Storage) {
     this.initializeApp();
-
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'จัดการข้อมูล', component: ManagePage, icon: "home"},
       { title: 'ประวัติการใช้งาน', component: HistoryPage ,icon: 'home'},
       { title: 'เกี่ยวกับ', component: AboutPage , icon: 'home'},
-      { title: 'ออกจากระบบ', component: MainPage , icon: 'home'}
+      { title: 'ออกจากระบบ', component: null , icon: 'home'}
     ];
   }
 
@@ -43,13 +46,21 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+  // openPage(page) {
+  //   // Reset the content nav to have just this page
+  //   // we wouldn't want the back button to show in this scenario
+  //   this.nav.setRoot(page.component);
+  // }
 
-  logout(){
-    this.nav.setRoot(MainPage);
-  }
+  openPage(page) {
+    if(page.component) {
+        this.nav.setRoot(page.component);
+    } else {
+      this.storage.clear().then(()=>{
+        this.nav.setRoot(LoginPage)
+        window.location.reload();
+      });
+    }
+}
+    
 }

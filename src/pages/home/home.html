@@ -9,6 +9,7 @@
 </ion-header>
 
 <ion-content padding>
+    <div id="content">
     <ion-card style="border-radius:10px;height: 30px">
               <div style="margin-left:10px;margin-top:-5px">
                   <ion-input type="text" placeholder="คุณอยู่ที่ไหน....." id="current" [(ngModel)]="Start"></ion-input>
@@ -20,9 +21,10 @@
            </div>
       </ion-card>
       <button id="mtBtn" ion-button full color="namaeto" (click)="calculateAndDisplayRoute();showTypefunc()" round>ตกลง</button>
-              <div #map id="map"></div>
-            <div *ngIf="showType">
-              <ion-grid>
+      </div>        
+      <div #map id="map"></div>
+            <div *ngIf="showType" id="footer">
+              <ion-grid >
                 <ion-row>
                   <ion-card color="namaeto" style="border-radius:10px;margin-left: 15px;margin-top:10px;width: 100%;">
                           <ion-grid>
@@ -37,20 +39,22 @@
                           </ion-grid>  
                       </ion-card>
                 </ion-row>
-                <ion-row style="margin-top:-10px">
-                <ion-col>
-                    <button ion-button color="namaeto" style="width: 50%" round text-center>
-                        <div style="width:500px;margin-right: -80px;">
-                                <ion-select [(ngModel)]="vehicle">
-                                <ion-option value="vin" selected>วิน</ion-option>
-                                <ion-option value="tuktuk">ตุ๊กตุ๊ก</ion-option>
-                              </ion-select>
-                              </div>
-                    </button>
+                <ion-row>
+                <ion-col col-auto>
+                    <div>
+                        <button style="width:50%;" ion-button color="namaeto" round>
+                        <div>
+                            <ion-select [(ngModel)]="vehicle" style="width:180px;margin-left: 50px">
+                            <ion-option value="vin" selected>วิน</ion-option>
+                            <ion-option value="tuktuk">ตุ๊กตุ๊ก</ion-option>
+                          </ion-select>
+                          </div>
+                        </button>
+                      </div>
                   </ion-col>
-                  <ion-col>
-                    <div style="margin-left:-140px;font-size:20px">
-                      <button style="width:90%;" ion-button color="namaeto" round>เรียกรถ</button>
+                  <ion-col col-auto style="margin-top:-61px;margin-left:150px">
+                    <div>
+                      <button style="width:115%;" ion-button color="namaeto" round>เรียกรถ</button>
                     </div>
                 </ion-col>
               </ion-row>

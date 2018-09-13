@@ -22,8 +22,8 @@ export class CustomerProvider {
 
    getUser(){
      return new Promise((resolve,reject)=>{
-      this.http.get('https://0a9d74e4.ngrok.io/namaetoDB/CustApp/login.php')
-       //this.http.get('http://localhost/namaetoDB/CustApp/login.php')
+      //this.http.get('https://0a9d74e4.ngrok.io/namaetoDB/CustApp/login.php')
+       this.http.get('http://localhost/namaetoDB/CustApp/login.php')
        .map(res=> res.json())
        .subscribe(data => {
          resolve(data);
@@ -34,7 +34,7 @@ export class CustomerProvider {
    }
 
    getdata(tel){
-    var url = "https://localhost/namaetoDB/CustApp/login2.php";
+    var url = "https://localhost/namaetoDB/CustApp/login.php";
     let body = new FormData();
     body.append('tel',tel);
 
