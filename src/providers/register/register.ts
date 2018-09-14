@@ -16,7 +16,8 @@ export class RegisterProvider {
   }
 
   doRegister(ssn,name,surname,email,tel){
-    var url = "https://0a9d74e4.ngrok.io/namaetoDB/CustApp/register.php";
+    //var url = "https://4f8b9c01.ngrok.io/namaetoDB/CustApp/register.php";
+    var url = "http://localhost/namaetoDB/CustApp/register.php";
     let body = new FormData();
     body.append('ssn',ssn);
     body.append('name',name);

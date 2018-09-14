@@ -19,6 +19,7 @@ import { AboutPage } from '../pages/about/about';
 import { MainPage } from '../pages/main/main';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+//import { DriveracceptedPage } from '../pages/driveraccepted/driveraccepted';
 //------pages----------
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -37,7 +38,8 @@ import { LoginProvider } from '../providers/login/login';
     MainPage,
     LoginPage,
     RegisterPage,
-    ListPage
+    ListPage,
+   // DriveracceptedPage
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import { LoginProvider } from '../providers/login/login';
     LoginPage,
     RegisterPage,
     AboutPage,
+   // DriveracceptedPage
   ],
   providers: [
     StatusBar,

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController, ModalOptions } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { } from '@agm/core';
 //import {} from "@types/googlemaps";
@@ -16,14 +16,43 @@ export class HomePage {
   Start:any;
   End:any;
   showType = false;
+  driveraccept = true;
   vehicle:any;
   distance:any;
+  showstatus = false;
   
   @ViewChild('map') mapRef: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public geo: Geolocation) {
-    console.log(this.distance)
+  constructor(public navCtrl: NavController, 
+              public geo: Geolocation,
+              public modalCtrl: ModalController) {
+  }
+
+  openCalling(){
+   const myModalOptions: ModalOptions = {
+      enableBackdropDismiss:false,
+      cssClass:"my-modal"
+   }
+   
+   const myModal =  this.modalCtrl.create('CallingPage',{},myModalOptions)
+   const myModal2 =  this.modalCtrl.create('DriveracceptedPage')
+   myModal.present();
+   
+   setTimeout(() => {
+    myModal.dismiss();
+    myModal2.present();
+
+        setTimeout(() => {
+          myModal2.dismiss();
+          this.driveraccept = false;
+          this.showstatus = true;
+        }, 3000);
+
+    }, 5000);
+
+
+
   }
 
 

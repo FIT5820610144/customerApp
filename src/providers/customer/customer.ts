@@ -22,7 +22,7 @@ export class CustomerProvider {
 
    getUser(){
      return new Promise((resolve,reject)=>{
-      //this.http.get('https://0a9d74e4.ngrok.io/namaetoDB/CustApp/login.php')
+      //this.http.get('https://4f8b9c01.ngrok.io/namaetoDB/CustApp/login.php')
        this.http.get('http://localhost/namaetoDB/CustApp/login.php')
        .map(res=> res.json())
        .subscribe(data => {
@@ -31,16 +31,5 @@ export class CustomerProvider {
          reject(error);
        })
      });
-   }
-
-   getdata(tel){
-    var url = "https://localhost/namaetoDB/CustApp/login.php";
-    let body = new FormData();
-    body.append('tel',tel);
-
-    this.data = this.http.post(url,body)
-    this.data.subscribe( data => {
-      console.log(data);
-    }) 
    }
 }

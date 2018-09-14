@@ -29,9 +29,7 @@ export class ManagePage {
   imageList:any;
   base64Image:string;
   item:any;
-
-
- // test: Array<{id:number,name:string}> = [];
+  name:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
   public viewController: ViewController,
@@ -43,9 +41,8 @@ export class ManagePage {
 
     this.image_base64 = 'assets/imgs/profile.jpg';
     this.imageList = [];
-
-  
-   
+    this.name = this.userList
+    console.log(this.name)
   }
 
   ionViewDidLoad() {
@@ -62,6 +59,11 @@ export class ManagePage {
     .then((data:any)=> {
       loading.dismiss();
       this.userList = data;
+      var cust_name = data.tem
+      console.log(data = [
+        {cust_name}
+      ])
+    
     });
   }
 
@@ -99,7 +101,8 @@ uploadImg(){
     spinner : 'circles'
   });
   loading.present();
-  let url = 'https://0a9d74e4.ngrok.io/namaetoDB/CustApp/uploadimg.php';
+  //let url = 'https://4f8b9c01.ngrok.io/namaetoDB/CustApp/uploadimg.php';
+  let url = 'http://localhost/namaetoDB/CustApp/uploadimg.php';
   let postData = new FormData();
   postData.append('file', this.base64Image);
   let data:Observable<any> = this.http.post(url, postData);

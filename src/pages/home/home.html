@@ -9,6 +9,11 @@
 </ion-header>
 
 <ion-content padding>
+    <div #map id="map"></div>
+    
+       
+      
+    <div *ngIf="driveraccept">
     <div id="content">
     <ion-card style="border-radius:10px;height: 30px">
               <div style="margin-left:10px;margin-top:-5px">
@@ -20,9 +25,8 @@
               <ion-input type="text" placeholder="คุณจะไปไหน....." [(ngModel)]="End"></ion-input>
            </div>
       </ion-card>
-      <button id="mtBtn" ion-button full color="namaeto" (click)="calculateAndDisplayRoute();showTypefunc()" round>ตกลง</button>
+      <button id="mtBtn" ion-button full color="namaeto" (click)="calculateAndDisplayRoute();showTypefunc()" round [disabled]="(Start == null && End == null)">ตกลง</button>
       </div>        
-      <div #map id="map"></div>
             <div *ngIf="showType" id="footer">
               <ion-grid >
                 <ion-row>
@@ -54,12 +58,32 @@
                   </ion-col>
                   <ion-col col-auto style="margin-top:-61px;margin-left:150px">
                     <div>
-                      <button style="width:115%;" ion-button color="namaeto" round>เรียกรถ</button>
+                      <button style="width:115%;" ion-button color="namaeto" round (click)="openCalling()">เรียกรถ</button>
                     </div>
                 </ion-col>
               </ion-row>
               </ion-grid>
             </div>
+          </div>
+          <div id="content" *ngIf="showstatus" style="margin-top:100px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-auto>
+                    <ion-card color="namaeto" style="width:300px;margin-left: -15px;margin-top: 300px;">
+                        <img src="assets/imgs/driver.png" style="width:20%;">
+                      </ion-card>
+                </ion-col>
+                <ion-col col-auto style="margin-top:-80px;font-size:18px;margin-left:70px;color:white">
+                    กข 1031 ยะลา<br> ฮอนด้าสีเขียว
+                </ion-col>
+                <ion-col col-auto style="margin-top:-85px;font-size:45px;color:white;margin-left: 35px;">
+                    <ion-icon name="call"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+         
+         
+        </div>
 
   <!--  <ion-item>
         <ion-label></ion-label>
