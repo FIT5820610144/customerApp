@@ -19,13 +19,18 @@ import { AboutPage } from '../pages/about/about';
 import { MainPage } from '../pages/main/main';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { EditCustomerPage } from '../pages/edit-customer/edit-customer'
 //import { DriveracceptedPage } from '../pages/driveraccepted/driveraccepted';
+//import { CommentPage } from '../pages/comment/comment';
 //------pages----------
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CustomerProvider } from '../providers/customer/customer';
 import { RegisterProvider } from '../providers/register/register';
 import { LoginProvider } from '../providers/login/login';
+import { CallingProvider } from '../providers/calling/calling';
+import { CommentProvider } from '../providers/comment/comment';
+//import { Ionic2RatingModule } from 'ionic2-rating';
 
 
 @NgModule({
@@ -39,6 +44,8 @@ import { LoginProvider } from '../providers/login/login';
     LoginPage,
     RegisterPage,
     ListPage,
+    //CommentPage
+    //EditCustomerPage,
    // DriveracceptedPage
   ],
   imports: [
@@ -46,6 +53,7 @@ import { LoginProvider } from '../providers/login/login';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    //Ionic2RatingModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyBWSUebxgKZO0lx_cm7J8kkZT08NyA8hkk",
       libraries: ["places"]
@@ -62,7 +70,8 @@ import { LoginProvider } from '../providers/login/login';
     LoginPage,
     RegisterPage,
     AboutPage,
-   // DriveracceptedPage
+    //CommentPage
+   // EditCustomerPage,
   ],
   providers: [
     StatusBar,
@@ -73,7 +82,9 @@ import { LoginProvider } from '../providers/login/login';
     LoginProvider,
     Camera,
     ImagePicker,
-    Geolocation
+    Geolocation,
+    CallingProvider,
+    CommentProvider
   ]
 })
 export class AppModule {}

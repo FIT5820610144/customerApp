@@ -26,7 +26,7 @@
            </div>
       </ion-card>
       <button id="mtBtn" ion-button full color="namaeto" (click)="calculateAndDisplayRoute();showTypefunc()" round [disabled]="(Start == null && End == null)">ตกลง</button>
-      </div>        
+      </div>       
             <div *ngIf="showType" id="footer">
               <ion-grid >
                 <ion-row>
@@ -34,6 +34,7 @@
                           <ion-grid>
                             <ion-row style="font-size:15px">
                               <ion-col>
+                                
                                   <div id="distance"></div>
                               </ion-col>
                               <ion-col>
@@ -58,7 +59,7 @@
                   </ion-col>
                   <ion-col col-auto style="margin-top:-61px;margin-left:150px">
                     <div>
-                      <button style="width:115%;" ion-button color="namaeto" round (click)="openCalling()">เรียกรถ</button>
+                      <button style="width:115%;" ion-button color="namaeto" round (click)="isCalling()">เรียกรถ</button>
                     </div>
                 </ion-col>
               </ion-row>
@@ -67,34 +68,22 @@
           </div>
           <div id="content" *ngIf="showstatus" style="margin-top:100px;">
             <ion-grid>
-              <ion-row>
+              <ion-row style="margin-top:-20px;"> 
                 <ion-col col-auto>
                     <ion-card color="namaeto" style="width:300px;margin-left: -15px;margin-top: 300px;">
-                        <img src="assets/imgs/driver.png" style="width:20%;">
+                        <img src="http://localhost/namaetoDB/CustApp/{{driver_img}}" style="width:20%;">
                       </ion-card>
                 </ion-col>
                 <ion-col col-auto style="margin-top:-80px;font-size:18px;margin-left:70px;color:white">
-                    กข 1031 ยะลา<br> ฮอนด้าสีเขียว
+                    {{vehicle_number}}<br> {{vehicle_brand}} {{vehicle_color}}
                 </ion-col>
                 <ion-col col-auto style="margin-top:-85px;font-size:45px;color:white;margin-left: 35px;">
                     <ion-icon name="call"></ion-icon>
                 </ion-col>
               </ion-row>
+              <ion-row style="margin-top:-15px" *ngIf="cancelBtn">
+                <button style="width:115%;" ion-button color="namaeto" round (click)="cancleCalling()">ยกเลิก</button>
+              </ion-row>
             </ion-grid>
-         
-         
         </div>
-
-  <!--  <ion-item>
-        <ion-label></ion-label>
-        <ion-input id="txtHome" type="text" placeholder="สถานที่ของคุณ"></ion-input>
-    </ion-item>
-    <ion-icon name="ios-locate" (click)="goCurrentPosition()" style="font-size: 40px; "></ion-icon>
-
-  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-  </agm-map>
-
- <ion-icon name="ios-locate" (click)="setCurrentPosition()" style="font-size: 40px; "></ion-icon>
-   <div #map id="map"></div> -->
 </ion-content>

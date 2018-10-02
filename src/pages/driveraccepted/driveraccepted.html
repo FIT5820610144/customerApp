@@ -8,23 +8,24 @@
 <ion-grid text-center style="font-size:20px;margin-top:40px">
   <ion-row>
     <ion-col style="margin-left:33%;">
-      <img style="width:50%;" src="assets/imgs/driver.png">
+      <img style="width:50%;border-radius: 50%;" src="http://localhost/namaetoDB/CustApp/{{driver_img}}">
     </ion-col>
   </ion-row>
   <ion-row>
       <ion-col>
-        อับดุลเลาะห์ ยามา
+        {{driver_name}} {{driver_surname}}
       </ion-col>
     </ion-row>
     <ion-row>
         <ion-col>
-          กข 1031 ยะลา
+          {{vehicle_number}}
         </ion-col>
       </ion-row>
       <ion-row>
           <ion-col>
-            ฮอนด้าสีเขียว
+            {{vehicle_brand}} {{vehicle_color}}
           </ion-col>
         </ion-row>
 </ion-grid>
+</ion-card>
 

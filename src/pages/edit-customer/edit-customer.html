@@ -1,0 +1,53 @@
+<ion-card style="border-radius:10px;width: 90%;height: 80%;margin-top:25%;margin-left: 17px;">
+  <ion-card-header text-center style="font-size:20px;color:tomato;">
+    แก้ไขข้อมูล
+  </ion-card-header>
+
+  <ion-card-content>
+      <ion-grid>
+          <ion-row>
+            <ion-col style="height: 10%; width:50%;">
+                <ion-label>ชื่อ : </ion-label>
+              <ion-card style="border-radius:10px;">
+                <ion-input type="text" [(ngModel)]="cust_name" ></ion-input>
+              </ion-card>
+            </ion-col>
+            <ion-col style="height: 10%; width:50%;">
+                <ion-label>นามสกุล : </ion-label>
+              <ion-card style="border-radius:10px;">
+                <ion-input type="text" [(ngModel)]="cust_surname"></ion-input>   
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="height: 10%; width:80%;">
+                <ion-label>อีเมล์ : </ion-label>
+                <ion-card style="border-radius:10px;">
+                    <ion-input type="text" [(ngModel)]="cust_email"></ion-input>   
+              </ion-card>
+            </ion-col> 
+          </ion-row>
+          <ion-row>
+            <ion-col style="height: 10%; width:80%;">
+                <ion-label>เบอร์โทรศัพท์ : </ion-label>
+                <ion-card style="border-radius:10px;">
+                    <ion-input type="text" [(ngModel)]="cust_tel"></ion-input>  
+              </ion-card>
+            </ion-col>
+           
+          </ion-row>
+          <ion-row text-center>
+            <ion-col>
+                <button ion-button color="namaeto" round (click)="edit($even,cust_name,cust_surname,cust_email,cust_tel)">แก้ไข</button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="namaeto" round (click)="cancleEdit()">ยกเลิก</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
+  </ion-card-content>
+  
+
+
+  </ion-card>

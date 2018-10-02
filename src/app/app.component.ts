@@ -12,6 +12,9 @@ import { AboutPage } from '../pages/about/about';
 import { MainPage } from '../pages/main/main';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { CustomerProvider } from '../providers/customer/customer';
+import { Observable } from 'rxjs/Rx';
+import { CommentPage } from '../pages/comment/comment';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,14 +23,25 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = LoginPage;
+  userList: any;
+  image_base64: any;
+  name:String;
+  surname:String;
+  item: any;
+  interval:any
+  queueInterval:any
+  Interval:any;
 
   pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    private storage: Storage) {
+    private storage: Storage,
+    public custProvider : CustomerProvider) {
     this.initializeApp();
+    this.ionViewDidLoad();
+    this.refresh();
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'จัดการข้อมูล', component: ManagePage, icon: "home"},
@@ -46,12 +60,6 @@ export class MyApp {
     });
   }
 
-  // openPage(page) {
-  //   // Reset the content nav to have just this page
-  //   // we wouldn't want the back button to show in this scenario
-  //   this.nav.setRoot(page.component);
-  // }
-
   openPage(page) {
     if(page.component) {
         this.nav.setRoot(page.component);
@@ -62,5 +70,36 @@ export class MyApp {
       });
     }
 }
+
+
     
+
+ionViewDidLoad(){
+
+  
+    this.custProvider.getUser()
+     .subscribe(data =>{
+       this.userList = data,
+       this.name = data[0].cust_name;
+       this.surname = data[0].cust_surname
+        if(data[0].cust_img == null){
+          this.image_base64 = 'http://localhost/namaetoDB/CustApp/noimg.png';
+        }else{
+          this.image_base64 = 'http://localhost/namaetoDB/CustApp/'+data[0].cust_img
+        }
+     })
+  
+
+ 
+}
+    refresh(){
+      console.log("refreshing")
+      let interval:number = 1000; // 5 seconds
+    let queueInterval = Observable.interval(interval).timeInterval();
+    queueInterval.subscribe(() => {
+      this.ionViewDidLoad();
+      });
+      clearInterval(interval)
+    }
+        
 }

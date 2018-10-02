@@ -23,11 +23,12 @@ export class LoginProvider {
   }
 
   doLogin(tel){
-    //var url = "https://4f8b9c01.ngrok.io/namaetoDB/CustApp/login2.php";
-    var url = "http://localhost/namaetoDB/CustApp/login2.php";
+    //var url = "https://514d472c.ngrok.io/namaetoDB/CustApp/login2.php";
+    var tel_data = tel
+    var url = "http://localhost/namaetoDB/CustApp/login2.php?tel="+tel_data;
     let body = new FormData();
-    body.append('tel',tel);
-    var response = this.http.post(url,body).map(res=>res.json());
+    //body.append('tel',tel);
+    var response = this.http.get(url).map(res=>res.json());
     return response ;
 
     

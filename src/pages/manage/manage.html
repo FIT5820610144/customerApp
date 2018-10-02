@@ -24,25 +24,31 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col style="margin-bottom:3%;margin-left: 13%;">
+      <ion-col style="margin-bottom:3%;margin-left: 10%;">
+        <div *ngIf="hidecurrentimg">
           <ion-avatar *ngFor="let item of userList">
-              <img class="shadow" src=http://localhost/namaetoDB/CustApp/1536403094.jpg>
-    
-        </ion-avatar>
-      </ion-col>
-    <ion-col style="margin-left:14%;margin-top: 15%;">
+              <img class="shadow" src="http://localhost/namaetoDB/CustApp/{{item.cust_img}}">
+            </ion-avatar>
+          </div>
 
-     <button ion-button class="bt-size" color="dark" (click)="openGallary()">กล้อง</button><br>
-     <button ion-button color="dark" (click)="uploadImg()">อัปโหลด</button><br>
-   
-   
+            <div *ngIf="showcurrentimg">
+                <ion-avatar>
+                <img class="shadow" src="{{image_base64}}">
+              </ion-avatar>
+            </div>
+      </ion-col>
+    </ion-row>
+      <ion-row text-center style="margin-left: 22px;">
+        <ion-col>
+          <button ion-button class="bt-size" color="dark" (click)="openGallary()">เปลี่ยนรูป</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button class="bt-size" color="dark" (click)="uploadImg()">อัปโหลด</button>
+        </ion-col>
+      </ion-row>
       <!-- <button ion-button class="bt-size" color="dark"  >อัปโหลด</button> 
      <ion-icon name="md-image"  color="namaeto" style="font-size: 20px;" (click)="uploadImg()"></ion-icon><br>
       <ion-icon name="md-cloud-upload" color="namaeto" style="font-size: 20px;" (click)="uploadImg()"></ion-icon>-->
-      
-     
-        </ion-col>
-    </ion-row>
   </ion-grid>
             
             <div *ngFor="let item of userList">
@@ -67,7 +73,7 @@
                           <ion-col style="margin-right:-30%;">
                               <ion-icon name="mail"></ion-icon>
                           </ion-col>
-                          <ion-col style="margin-right:8%;">
+                          <ion-col style="margin-right:10%;">
                                อีเมล์ {{item.cust_email}}
                           </ion-col>
                         </ion-row>
@@ -94,6 +100,6 @@
                 </div>    
                 </div>
           <div text-center>
-          <button ion-button class="radius-but" color="namaeto">แก้ไขข้อมูล</button>
+          <button ion-button class="radius-but" color="namaeto" (click)="editCustomer()">แก้ไขข้อมูล</button>
         </div>        
 </ion-content>

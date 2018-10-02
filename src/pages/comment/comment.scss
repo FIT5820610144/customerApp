@@ -1,0 +1,21 @@
+page-comment {
+    // .opacity{
+    //     opacity: 0.5;
+    // }
+   
+}
+ul {
+    padding: 0px;
+    margin-top: -10px !important;
+  
+    &.rating li {
+      padding: 5px 5px !important;
+      background: none;
+      color:white;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
+  }
+

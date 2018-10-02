@@ -50,14 +50,15 @@ export class LoginPage {
   }
   doLogin(event,tel){
     //this.custCtrl.getdata(tel);
-     this.storage.set('islogon',true);
+     
     //console.log( this.storage.set('islogon',true))
    // this.appCtrl.getRootNav().setRoot(HomePage);
-    window.location.reload();
     this.loginCtrl.doLogin(tel).subscribe(
       data =>{
-        this.item = data.message;
+        //.item = data.message;
+        console.log(data.status)
         if(data.status == "success"){
+          this.storage.set('islogon',true);
           let alert = this.alertCtrl.create({
             title: 'Login',
             subTitle: 'เข้าสู่ระบบสำเร็จ',
@@ -69,6 +70,7 @@ export class LoginPage {
             }]
           });
           alert.present();
+          //window.location.reload();
 
         }else {
           let alert = this.alertCtrl.create({

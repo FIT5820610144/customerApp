@@ -1,0 +1,63 @@
+<!--
+  Generated template for the CommentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+
+  <ion-navbar>
+    <ion-title>comment</ion-title>
+  </ion-navbar>
+
+</ion-header> -->
+
+<ion-card style="border-radius:10px;width: 90%;height: 60%;margin-top:35%;margin-left: 17px;" color="namaeto">
+  
+  <ion-grid>
+      <ion-card-header text-center >
+    <ion-row>
+      <ion-col>
+          <ion-icon style="font-size: 50px;" name="checkmark-circle-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+         <div style="font-size: 25px;">ขอบคุณที่ใช้บริการ</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <rating [(ngModel)]="rate" 
+        readOnly="false" 
+        max="5" 
+        emptyStarIconName="star-outline"
+        halfStarIconName="star-half" 
+        starIconName="star" 
+        nullable="false"
+        (ngModelChange)="onModelChange($event)"> 
+        </rating> 
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-card style="border-radius:10px;">
+              <ion-textarea style="color: black" placeholder="แสดงความคิดเห็น" [(ngModel)]="commentdetail"></ion-textarea>
+            </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+        <ion-col>
+            <button ion-button color="light" round (click)="toComment($event,rate,commentdetail)">ตกลง</button>
+        </ion-col>
+        <ion-col>
+            <button ion-button color="light" round (click)="cancleComment()">ยกเลิก</button>
+        </ion-col>
+      </ion-row>
+  </ion-card-header>
+  </ion-grid>
+ 
+</ion-card>
+<!-- <ion-content padding class="opacity">
+</ion-content> -->
+
