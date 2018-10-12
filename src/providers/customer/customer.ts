@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http,Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import { GlobalVariableProvider } from '../global-variable/global-variable';
 
 
 /*
@@ -16,12 +17,27 @@ export class CustomerProvider {
 
   tel = "";
   data:any;
+  ip:any
   private _url:string = "http://localhost/namaetoDB/CustApp/login.php";
 //  private _Gurl:string = "https://514d472c.ngrok.io/namaetoDB/CustApp/login.php";
 
-  constructor(public http: Http) {
+  constructor(public http: Http,public globalVar: GlobalVariableProvider) {
     console.log('Hello CustomerProvider Provider');
   }
+  
+  getUser(){
+    return this.http.get(this._url)
+           .map((response:Response)=> response.json());
+   }
+
+  //  getUrl(){
+  //    this.globalVar.getIP().subscribe(data=>{
+  //       data = this.ip;      
+  //       console.log("IP = ") 
+  //    })
+  //  }
+
+
 
     // getUser(){
     //   return new Promise((resolve,reject)=>{
@@ -36,9 +52,5 @@ export class CustomerProvider {
     //     })
     //   });
     // }
-    getUser(){
-     return this.http.get(this._url)
-            .map((response:Response)=> response.json());
-    }
 
 }

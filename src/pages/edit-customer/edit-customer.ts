@@ -60,8 +60,6 @@ export class EditCustomerPage {
                   text: 'ตกลง',
                   handler: data=>{
                     this.navCtrl.pop()
-                    //this.navParams.get("edited");
-                    //window.location.reload();
                   }
                 }]
               });

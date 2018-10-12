@@ -19,21 +19,33 @@
   </ion-header>
 
 
-<ion-content padding>
-  
-      <ion-card  color="namaeto">
-          <ion-card-header>
-              มอ.ปัตตานี - บิ๊กซีปัตตานี <font style="margin-left: 20%;">30฿</font>
-          </ion-card-header>
-        </ion-card>
-        <ion-card  color="namaeto">
-            <ion-card-header>
-                มอ.ปัตตานี - เปิดท้าย <font style="margin-left: 20%;">30฿</font>
-            </ion-card-header>
-          </ion-card>
-
+<ion-content>
+             <div *ngIf="showData">
+                <ion-item *ngFor="let item of recordList" style="background-color:#fc7f51">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                    {{item.origin}} - {{item.destination}}
+                                    <ion-row style="font-size:10px">
+                                            {{item.cr_datetime}}
+                                    </ion-row>
+                            </ion-col>
+                            <ion-col text-center>
+                                    {{item.fare}}฿
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>      
+                </ion-item>
+            </div>  
+                <div *ngIf="noData" text-center>
+                  <p>  ----- ไม่มีประวัติการเรียกรถ ----- </p>
+                </div>
+            
+          
+                       
+     
           <div text-center>
-              <button ion-button color="namaeto" style="margin-top:30px; border-radius: 20px;">ลบข้อมูล</button>
+              <button ion-button color="namaeto" style="margin-top:30px; border-radius: 20px;" (click)="delete()">ลบข้อมูล</button>
             </div>
 
 </ion-content>

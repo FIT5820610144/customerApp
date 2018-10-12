@@ -75,22 +75,21 @@ export class MyApp {
     
 
 ionViewDidLoad(){
-
-  
-    this.custProvider.getUser()
-     .subscribe(data =>{
-       this.userList = data,
-       this.name = data[0].cust_name;
-       this.surname = data[0].cust_surname
-        if(data[0].cust_img == null){
-          this.image_base64 = 'http://localhost/namaetoDB/CustApp/noimg.png';
-        }else{
-          this.image_base64 = 'http://localhost/namaetoDB/CustApp/'+data[0].cust_img
-        }
-     })
-  
-
- 
+  this.storage.get('islogon').then((val) => {
+    if(val == true) {
+      this.custProvider.getUser()
+      .subscribe(data =>{
+        this.userList = data,
+        this.name = data[0].cust_name;
+        this.surname = data[0].cust_surname
+         if(data[0].cust_img == null){
+           this.image_base64 = 'http://localhost/namaetoDB/CustApp/noimg.png';
+         }else{
+           this.image_base64 = 'http://localhost/namaetoDB/CustApp/'+data[0].cust_img
+         }
+      })
+      }
+    }); 
 }
     refresh(){
       console.log("refreshing")

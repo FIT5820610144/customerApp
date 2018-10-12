@@ -19,18 +19,32 @@ export class CallingProvider {
     console.log('Hello CallingProvider Provider');
   }
 
-  toCalling(cust_ssn,Start,End,call_status){
+  toCalling(cust_ssn,Start,End,call_status,distance,fare){
     //var url = "https://a24f251f.ngrok.io/namaetoDB/CustApp/callingdb.php";
     var url = "http://localhost/namaetoDB/CustApp/callingdb.php";
     let body = new FormData();
     body.append('cust_ssn',cust_ssn);
     body.append('Start',Start);
     body.append('End',End);
+    body.append('distance',distance);
+    body.append('fare',fare);
     body.append('call_status',call_status);
     
     var response = this.http.post(url,body).map(res=>res.json());
     return response ;
 
+  }
+
+  saveCallingRec(Start,End,cust_ssn,fare){
+    var url = "http://localhost/namaetoDB/CustApp/custCallingRecord.php";
+    let body = new FormData();
+    body.append('Start',Start);
+    body.append('End',End);
+    body.append('fare',fare);
+    body.append('cust_ssn',cust_ssn);
+  
+    var response = this.http.post(url,body).map(res=>res.json());
+    return response ;
   }
 
   accept(){

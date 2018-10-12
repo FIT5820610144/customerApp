@@ -59,6 +59,7 @@ export class LoginPage {
         console.log(data.status)
         if(data.status == "success"){
           this.storage.set('islogon',true);
+          this.storage.set('getTel',tel)
           let alert = this.alertCtrl.create({
             title: 'Login',
             subTitle: 'เข้าสู่ระบบสำเร็จ',
@@ -78,9 +79,9 @@ export class LoginPage {
             subTitle: 'ไม่สามารถเข้าสู่ระบบได้',
             buttons: [{
               text: 'ตกลง',
-              handler: data=>{
-                  this.navCtrl.setRoot(LoginPage);
-              }
+              // handler: data=>{
+              //     this.navCtrl.setRoot(LoginPage);
+              // }
             }]
           }); alert.present();
         }

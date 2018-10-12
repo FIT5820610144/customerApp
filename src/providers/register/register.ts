@@ -39,7 +39,6 @@ editCustomer(name,surname,email,tel){
   body.append('email',email);
   body.append('tel',tel);
   
-
   var response = this.http.post(url,body).map(res=>res.json());
   return response ;
 }

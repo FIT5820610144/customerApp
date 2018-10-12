@@ -33,6 +33,7 @@ export class ManagePage {
   showcurrentimg = false;
   inTerval:any;
   myModal:any;
+  tel:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
   public viewController: ViewController,
@@ -47,6 +48,7 @@ export class ManagePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManagePage');
+    console.log("userList = "+this.userList)
   }
 
   ionViewWillEnter(){
@@ -57,13 +59,8 @@ export class ManagePage {
     loading.present();
     this.custProvider.getUser()
     .subscribe(data =>{
-      // this.inTerval = setInterval(()=>{
-        
-      // },3000)
-      //var test = this.myModal.dismiss();
-      //console.log("Modal = " +test)
-
       this.userList = data
+      this.tel = data[0].cust_tel
       this.item = data[0].cust_img
       if(data[0].cust_img == null){
         this.image_base64 = 'http://localhost/namaetoDB/CustApp/noimg.png';
@@ -112,7 +109,7 @@ uploadImg(){
   });
   loading.present();
   //let url = 'https://514d472c.ngrok.io/namaetoDB/CustApp/uploadimg.php';
-  let url = 'http://localhost/namaetoDB/CustApp/uploadimg.php';
+  let url = 'http://172.18.160.137/namaetoDB/CustApp/uploadimg.php';
   let postData = new FormData();
   postData.append('file', this.base64Image);
   let data:Observable<any> = this.http.post(url, postData);

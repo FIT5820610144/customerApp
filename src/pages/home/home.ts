@@ -7,6 +7,7 @@ import { } from '@agm/core';
 import {Observable} from 'rxjs/Rx';
 import { ListPage } from '../list/list';
 import { CustomerProvider } from '../../providers/customer/customer'
+import { CallNumber } from '@ionic-native/call-number';
 
 
 declare var google: any;
@@ -23,7 +24,7 @@ export class HomePage {
   showType = false;
   driveraccept = true;
   vehicle:any;
-  distance:any;
+  distance:any;defaltfare:any;fare:any;vehicles:any;
   showstatus = false;
   call_status=1;
   dissmiss:any;
@@ -35,7 +36,7 @@ export class HomePage {
   image_base64: any;
   item:any;
   cust_ssn:any;
-  vehicleList:any;vehicle_number:any;vehicle_brand:any;vehicle_color:any;driver_img:any;
+  vehicleList:any;vehicle_number:any;vehicle_brand:any;vehicle_color:any;driver_img:any;finished:any
 
   
   @ViewChild('map') mapRef: ElementRef;
@@ -46,9 +47,21 @@ export class HomePage {
               public modalCtrl: ModalController,
               public callingCtrl: CallingProvider,
               private storage: Storage,
-              public custProvider : CustomerProvider,) {        
-  }
+              public custProvider : CustomerProvider,
+              private callNumber: CallNumber,) {   
   
+  }
+
+  // async calltoNumber():Promise<any>{
+  //   try{
+  //     await this.callNumber.callNumber("0612409025", true);
+  //   }
+  //   catch(e){
+  //     console.error(e);
+  //   }
+    
+  // }
+
   getVehicles(){
     this.callingCtrl.getVehicle()
     .subscribe(data =>{
@@ -57,7 +70,6 @@ export class HomePage {
       this.vehicle_number = data[0].veh_number;
       this.vehicle_brand = data[0].veh_brand;
       this.vehicle_color = data[0].veh_color;
-     // console.log("Driver_name = "+this.dri_name)
     })
   }
 
@@ -66,7 +78,6 @@ export class HomePage {
     .subscribe(data =>{
       this.userList = data
       this.cust_ssn = data[0].cust_ssn;
-      //console.log("Cust_ssn"+this.cust_ssn)
     })
   }
 
@@ -82,13 +93,11 @@ export class HomePage {
 
   isCalling(accept){
     if(accept == null){
-     // console.log("cust_name = "+this.cust_name)
       
-      this.callingCtrl.toCalling(this.cust_ssn,this.Start,this.End,this.call_status).subscribe(data=>{
+      this.callingCtrl.toCalling(this.cust_ssn,this.Start,this.End,this.call_status,this.distance,this.fare).subscribe(data=>{
         
         this.getaccept = setInterval(()=>{
           this.callingCtrl.accept().subscribe(data=>{ //รับค่า accept
-
             this.getAccept(data[0].dri_action)  //ส่ง driver_action ไปยังฟังก์ชั่น getAceept
             console.log("driver_action = "+data[0].dri_action)
             if(data[0].dri_action == 'accepted'){
@@ -104,12 +113,13 @@ export class HomePage {
         this.getaccept2 = setInterval(()=>{
           this.callingCtrl.finished().subscribe(data=>{ //รับค่า finish
             console.log("finish = "+data[0].finished)
+            this.finished = data[0].finished;
             if(data[0].finished == 'finished'){
+              this.saveCallingRecord();
               this.myModal3.present();
               clearInterval(this.getaccept2);
               this.showstatus = false;
               this.cancelBtn = false;
-              //console.log("finiheddddddd")
             }
           })
         },3000)
@@ -137,10 +147,14 @@ export class HomePage {
       }, 5000); 
     }else if(accept == 'cancled'){
       console.log("else if = "+accept)
-     // this.cancelBtn = false
       this.myModal1.dismiss();
-    }
-    
+    }  
+  }
+
+  saveCallingRecord(){
+      this.callingCtrl.saveCallingRec(this.Start,this.End,this.cust_ssn,this.fare).subscribe(data=>{
+      })
+      console.log("Saved Record");
   }
 
 //////------Google Maps------///////
@@ -148,6 +162,12 @@ export class HomePage {
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var firstPosition = {lat:clat,lng:clng};
+        
+        
+        this.getaccept = setInterval(()=>{
+          var distance = localStorage.getItem("km");
+          this.distance = distance;
+         },100)
 
             var map = new google.maps.Map(document.getElementById('map'), {
               zoom: 15,
@@ -164,31 +184,44 @@ export class HomePage {
           map: map,
           icon: 'assets/imgs/maker.gif',
         });
-
+     
        directionsDisplay.setMap(map);
-
         directionsService.route({
           origin: this.Start,
           destination: this.End,
           travelMode: 'DRIVING',
-        }, function(response, status) {
+        }, function (response, status){
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
             var getDistance = response.routes[0].legs[0].distance.value
+            
             this.distance = getDistance;
             var getKm = getDistance/1000
             var km = getKm.toFixed(0);
-            var defaultFare = 5;
-            
-            var getFare = getKm * defaultFare;
-            var fare = getFare.toFixed(0)
-              document.getElementById('distance').innerHTML=km + ' KM'
-              document.getElementById('fare').innerHTML=fare + ' ฿'
-
+            var dFare = 5
+            localStorage.setItem("km", km);
           } else {
             window.alert('ไม่สามารถค้นหาเส้นทางที่ท่านได้ระบุ ' + status);
           }
-    }); 
+    });
+  }
+
+  vehicleChange($event){
+    this.vehicles = $event
+    console.log("vehicle = "+this.vehicle)
+  }
+  calculateFare(){
+    this.getaccept = setInterval(()=>{
+      var dist = this.distance
+      var dFare = 5
+      if(this.vehicles == 1){
+        dFare = 10;
+      }
+      var getFare = dist * dFare;
+      var fare = getFare.toFixed(0)
+      this.fare = fare;
+     },100)
+    
   }
   //////------Google Maps------///////
 
@@ -196,15 +229,17 @@ export class HomePage {
     this.geo.getCurrentPosition().then( pos => {
         this.clat = pos.coords.latitude
         this.clng = pos.coords.longitude
-       this.calculateAndDisplayRoute(this.clat,this.clng);
+        var fare = 0
+        this.calculateAndDisplayRoute(this.clat,this.clng);
       }).catch(err => console.log(err)); 
       this.getUser();
       this.getVehicles();
+      this.calculateFare();
   }
 
   showTypefunc(){
     this.showType = true;
-    console.log("distance "+this.distance)
+    this.calculateFare();
   }
       
 }

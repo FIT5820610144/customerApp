@@ -30,6 +30,10 @@ import { RegisterProvider } from '../providers/register/register';
 import { LoginProvider } from '../providers/login/login';
 import { CallingProvider } from '../providers/calling/calling';
 import { CommentProvider } from '../providers/comment/comment';
+import { GlobalVariableProvider } from '../providers/global-variable/global-variable';
+import { CallingRecordProvider } from '../providers/calling-record/calling-record';
+import { CallNumber } from '@ionic-native/call-number';
+import { DeletedataProvider } from '../providers/deletedata/deletedata';
 //import { Ionic2RatingModule } from 'ionic2-rating';
 
 
@@ -84,7 +88,11 @@ import { CommentProvider } from '../providers/comment/comment';
     ImagePicker,
     Geolocation,
     CallingProvider,
-    CommentProvider
+    CommentProvider,
+    GlobalVariableProvider,
+    CallingRecordProvider,
+    CallNumber,
+    DeletedataProvider
   ]
 })
 export class AppModule {}

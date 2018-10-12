@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,ViewController,App  } from 'ionic-angular';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { CommentProvider } from '../../providers/comment/comment';
 import { CallingProvider } from '../../providers/calling/calling'
@@ -27,7 +27,9 @@ export class CommentPage {
      public navParams: NavParams,
      public commentCtrl: CommentProvider,
      public callingCtrl: CallingProvider,
-     public alertCtrl: AlertController,) {
+     public alertCtrl: AlertController,
+     public viewCtrl:ViewController,
+     private app:App) {
   }
   
   onModelChange(event){
@@ -50,9 +52,9 @@ export class CommentPage {
           buttons: [{
             text: 'ตกลง',
             handler: data=>{
-              this.navCtrl.setRoot(HomePage);
-              //this.navParams.get("edited");
-              window.location.reload();
+                  this.viewCtrl.dismiss().then(() => {
+                    this.app.getRootNav().setRoot(HomePage);
+                });
             }
           }]
         });
@@ -70,8 +72,9 @@ export class CommentPage {
     })
   }
   cancleComment(){
-    this.navCtrl.setRoot(HomePage)
-    window.location.reload();
+    this.viewCtrl.dismiss().then(() => {
+      this.app.getRootNav().setRoot(HomePage);
+  });
   }
 
 

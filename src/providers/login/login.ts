@@ -24,14 +24,12 @@ export class LoginProvider {
 
   doLogin(tel){
     //var url = "https://514d472c.ngrok.io/namaetoDB/CustApp/login2.php";
-    var tel_data = tel
-    var url = "http://localhost/namaetoDB/CustApp/login2.php?tel="+tel_data;
+    //var tel_data = tel
+    var url = "http://localhost/namaetoDB/CustApp/login2.php";
     let body = new FormData();
-    //body.append('tel',tel);
-    var response = this.http.get(url).map(res=>res.json());
+    body.append('tel',tel);
+    var response = this.http.post(url,body).map(res=>res.json());
     return response ;
-
-    
 }
 
 }
