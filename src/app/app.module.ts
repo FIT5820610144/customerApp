@@ -7,9 +7,9 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { IonicStorageModule } from '@ionic/storage';
+import { StatusBar } from '@ionic-native/status-bar';
 
-//---------pages--------
-
+//--------- pages -------- //
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -20,10 +20,8 @@ import { MainPage } from '../pages/main/main';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { EditCustomerPage } from '../pages/edit-customer/edit-customer'
-//import { DriveracceptedPage } from '../pages/driveraccepted/driveraccepted';
-//import { CommentPage } from '../pages/comment/comment';
-//------pages----------
-import { StatusBar } from '@ionic-native/status-bar';
+
+//--------------- Providers -------------------//
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CustomerProvider } from '../providers/customer/customer';
 import { RegisterProvider } from '../providers/register/register';
@@ -34,7 +32,6 @@ import { GlobalVariableProvider } from '../providers/global-variable/global-vari
 import { CallingRecordProvider } from '../providers/calling-record/calling-record';
 import { CallNumber } from '@ionic-native/call-number';
 import { DeletedataProvider } from '../providers/deletedata/deletedata';
-//import { Ionic2RatingModule } from 'ionic2-rating';
 
 
 @NgModule({
@@ -48,20 +45,17 @@ import { DeletedataProvider } from '../providers/deletedata/deletedata';
     LoginPage,
     RegisterPage,
     ListPage,
-    //CommentPage
-    //EditCustomerPage,
-   // DriveracceptedPage
+
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    //Ionic2RatingModule,
-    AgmCoreModule.forRoot({
-      apiKey: "AIzaSyBWSUebxgKZO0lx_cm7J8kkZT08NyA8hkk",
-      libraries: ["places"]
-  })
+  //   AgmCoreModule.forRoot({
+  //     apiKey: "AIzaSyBWSUebxgKZO0lx_cm7J8kkZT08NyA8hkk",
+  //     libraries: ["places"]
+  // })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,8 +68,6 @@ import { DeletedataProvider } from '../providers/deletedata/deletedata';
     LoginPage,
     RegisterPage,
     AboutPage,
-    //CommentPage
-   // EditCustomerPage,
   ],
   providers: [
     StatusBar,

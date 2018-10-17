@@ -31,23 +31,27 @@
 }
 .hx{
     font-size: 20px;
+    margin-top: 18px;
+    margin-left:-30px;
 }
 
 .font-color{
         color: #F26730;
 }
 
-ion-avatar,
-ion-avatar > img{
+.ion-avatar
+{
     border-radius:50%;
-    height:10rem;
-    width:10rem;
-    margin-left:20%;
-    margin-top: 10%;
+    border:2px solid white;
+    height:8rem;
+    width:8rem;
+    //margin:auto;
+    float:left;
+   // display: inline;
+    
 }
 .footer{
-    margin-top: 50%;
-    margin-left: 85%; 
+    text-align: center;
     color: gray;
 }
 @media only screen and (orientation: landscape)  {
@@ -62,3 +66,10 @@ ion-avatar > img{
      } 
    }
   }
+  .item{
+    border-style: none
+  }
+ button{
+     margin:auto;
+ }
+

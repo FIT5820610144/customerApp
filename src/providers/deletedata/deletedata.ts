@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GlobalVariableProvider } from '../global-variable/global-variable';
 
 /*
   Generated class for the DeletedataProvider provider.
@@ -9,9 +10,10 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class DeletedataProvider {
-
-  constructor(public http: HttpClient) {
+  public url:any;
+  constructor(public http: HttpClient,public globalVar: GlobalVariableProvider) {
     console.log('Hello DeletedataProvider Provider');
+    this.url = this.globalVar.localhost
   }
 
 }

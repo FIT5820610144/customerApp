@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,ViewController,App} from 'ionic-angular';
 import { CustomerProvider } from '../../providers/customer/customer';
 import { RegisterProvider } from '../../providers/register/register';
 import { ManagePage } from '../manage/manage';
-
-
-/**
- * Generated class for the EditCustomerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,7 +18,9 @@ export class EditCustomerPage {
     public navParams: NavParams,
     public custProvider : CustomerProvider,
     public registCtrl : RegisterProvider,
-    public alertCtrl: AlertController,) {
+    public alertCtrl: AlertController,
+    public viewCtrl:ViewController,
+    private app:App) {
       
   }
 
@@ -35,6 +29,7 @@ export class EditCustomerPage {
     this.getUsers();
   }
 
+  //------------- get all customer data from database for edit -----//
     getUsers(){
       this.custProvider.getUser()
       .subscribe(data =>{
@@ -43,10 +38,10 @@ export class EditCustomerPage {
         this.cust_surname = data[0].cust_surname
         this.cust_email = data[0].cust_email
         this.cust_tel = data[0].cust_tel
-        console.log("Got Users = " + data[0].cust_name);
       })
     }
 
+    //------ function for update when click edit button ------//
       edit(event,name,surname,email,tel){
         console.log("name for html = " + name)
           
@@ -59,7 +54,9 @@ export class EditCustomerPage {
                 buttons: [{
                   text: 'ตกลง',
                   handler: data=>{
-                    this.navCtrl.pop()
+                    this.viewCtrl.dismiss().then(() => {
+                      this.app.getRootNav().setRoot(ManagePage);
+                  });
                   }
                 }]
               });

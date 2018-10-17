@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
+import { GlobalVariableProvider } from '../global-variable/global-variable';
 
 /*
   Generated class for the CommentProvider provider.
@@ -11,14 +12,15 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class CommentProvider {
-
-  constructor(public http: Http) {
+  public url:any;
+  constructor(public http: Http,public globalVar: GlobalVariableProvider) {
+    this.url = this.globalVar.localhost
     console.log('Hello CommentProvider Provider');
   }
 
   toComment(rate,commentdetail,cust_ssn,dri_ssn){
     //var url = "https://a24f251f.ngrok.io/namaetoDB/CustApp/register.php";
-    var url = "http://localhost/namaetoDB/CustApp/commentApi.php";
+    var url = "http://"+this.url+"/namaetoDB/CustApp/commentApi.php";
     let body = new FormData();
     body.append('rate',rate);
     body.append('commentdetail',commentdetail);

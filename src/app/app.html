@@ -1,43 +1,48 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" swipeEnabled="false">
   <ion-header>
-    <ion-toolbar color="namaeto">
+    <!-- <ion-toolbar color="namaeto">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
-  </ion-header>
+   -->
 
-  <ion-content>
-   
+  
 
       <ion-card class="card" color="namaeto">
 
-          <ion-grid>
+          <ion-grid style="margin-top:20px;margin-left:15px">
               <ion-row>
                 <ion-col>
-                   <ion-avatar item-start>
-              <img src="{{image_base64}}">
-             
-        </ion-avatar>
+
+         
+              <img class="ion-avatar" src="{{image_base64}}">   
+          
+          
                 </ion-col>
-              </ion-row>
-              <ion-row>
+              
+              <ion-col>
+
                   <div class="hx">
-                      &emsp;&emsp;&ensp;&nbsp;&nbsp; {{name}}&nbsp;&nbsp;{{surname}}
-                  </div>  <br>
+                      {{name}}&nbsp;{{surname}}<br>
+                     <div style="font-size:15px;margin-top:-8px;text-align: left"> ({{tel}}) </div>
+                  </div>
+
+              </ion-col>
               </ion-row>
             </ion-grid>
          
-          
-        
-         
-        
         </ion-card>
-    <ion-list>
 
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <div class="font-color">&emsp;&emsp;&emsp;&emsp;{{p.title}}</div>
+      </ion-header>
+        <ion-content>
+    <div style="margin-left: 12%;">
+      <button menuClose ion-item no-lines *ngFor="let p of pages" (click)="openPage(p)" detail-none>
+        <ion-icon [name]="p.icon" item-left></ion-icon>
+        <div class="font-color">{{p.title}}</div>
       </button>
-    </ion-list>
-    <div class="footer">V 1.0</div>
+    </div>
+
+    <ion-footer>Version for Final Project</ion-footer>
+
   </ion-content>
 </ion-menu>
 

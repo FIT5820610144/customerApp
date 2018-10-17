@@ -3,8 +3,7 @@
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
--->
-<ion-header>
+--><ion-header>
 
   <ion-navbar color="namaeto">
   <ion-title>ข้อมูลส่วนตัว</ion-title>
@@ -19,87 +18,97 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="bg-image" swipeEnabled="false">
+    <div ion-fixed>
 
+        <ion-grid>
+            <ion-row>
+              <ion-col style="margin:auto;margin-top:70px">
+                <div class="container" *ngIf="hidecurrentimg">
+                  <ion-avatar *ngFor="let item of userList">
+                      <img class="shadow" src="{{image_base64}}">
+                      <div class="block"></div>
+                    </ion-avatar>
+                    <div class="bottom-right">
+                        <ion-icon name="camera" (click)="presentActionSheet()"></ion-icon>
+                    </div>
+                  </div>
+        
+                    <div *ngIf="showcurrentimg">
+                        <ion-avatar>
+                        <img class="shadow" src="{{image_base64}}">
+                      </ion-avatar>
+                    </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+       
 
-  <ion-grid>
-    <ion-row>
-      <ion-col style="margin-bottom:3%;margin-left: 10%;">
-        <div *ngIf="hidecurrentimg">
-          <ion-avatar *ngFor="let item of userList">
-              <img class="shadow" src="http://localhost/namaetoDB/CustApp/{{item.cust_img}}">
-            </ion-avatar>
-          </div>
+    
 
-            <div *ngIf="showcurrentimg">
-                <ion-avatar>
-                <img class="shadow" src="{{image_base64}}">
-              </ion-avatar>
-            </div>
-      </ion-col>
-    </ion-row>
-      <ion-row text-center style="margin-left: 22px;">
-        <ion-col>
-          <button ion-button class="bt-size" color="dark" (click)="openGallary()">เปลี่ยนรูป</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button class="bt-size" color="dark" (click)="uploadImg()">อัปโหลด</button>
-        </ion-col>
-      </ion-row>
-      <!-- <button ion-button class="bt-size" color="dark"  >อัปโหลด</button> 
-     <ion-icon name="md-image"  color="namaeto" style="font-size: 20px;" (click)="uploadImg()"></ion-icon><br>
-      <ion-icon name="md-cloud-upload" color="namaeto" style="font-size: 20px;" (click)="uploadImg()"></ion-icon>-->
-  </ion-grid>
+  <ion-card-content>
+ 
             
-            <div *ngFor="let item of userList">
+            <div *ngFor="let item of userList" padding>
                 <div class="text-margin"> 
                   <ion-list>
                   <ion-grid>
-                    <ion-card class="mycard">
-                      <ion-card-content>
+                    <!-- <ion-card class="mycard"> -->
+                      <!-- <ion-card-content> -->
                     <ion-row>
-                      <ion-col style="margin-right:-30%;">
+                      <ion-col style="margin:auto;font-size:17px">
                           <ion-icon name="person"></ion-icon>
                       </ion-col>
-                      <ion-col style="margin-left:-50%;">
+                      <ion-col style="margin-left:-63%;font-size:17px">
                             ชื่อ {{item.cust_name}} &ensp; {{item.cust_surname}}
                       </ion-col>
                     </ion-row>
-                  </ion-card-content>
-                </ion-card>
-                <ion-card class="mycard">
-                  <ion-card-content>
+                  <!-- </ion-card-content> -->
+                <!-- </ion-card> -->
+                <!-- <ion-card class="mycard"> -->
+                  <!-- <ion-card-content> -->
                       <ion-row>
-                          <ion-col style="margin-right:-30%;">
+                          <ion-col style="margin:auto;font-size:17px">
                               <ion-icon name="mail"></ion-icon>
                           </ion-col>
-                          <ion-col style="margin-right:10%;">
+                          <ion-col style="margin-left:-63%;font-size:17px">
                                อีเมล์ {{item.cust_email}}
                           </ion-col>
                         </ion-row>
-                  </ion-card-content>
-                </ion-card>
+                  <!-- </ion-card-content> -->
+                <!-- </ion-card> -->
 
-                <ion-card class="mycard">
-                    <ion-card-content>
+                <!-- <ion-card class="mycard"> -->
+                    <!-- <ion-card-content> -->
                         <ion-row>
-                            <ion-col style="margin-right:-50%;">
+                            <ion-col style="margin-right:-63%;font-size:17px">
                                   <ion-icon name="call"></ion-icon>
                               </ion-col>
-                              <ion-col style="margin-left:-30%;">
+                              <ion-col style="margin:auto;font-size:17px">
                                   เบอร์โทร {{item.cust_tel}}
                               </ion-col>
                             </ion-row>
-                    </ion-card-content>
-                  </ion-card>
-                   
+                           
+                            
+                    <!-- </ion-card-content> -->
+                  <!-- </ion-card> -->
+                  <ion-row>
+                      <ion-col>
+                          <div text-center>
+                              <button ion-button class="radius-but" color="namaeto" (click)="editCustomer()">แก้ไขข้อมูล</button>
+                            </div>
+                      </ion-col>
+                        
+                    </ion-row>
                       
                   </ion-grid>
                 </ion-list>
 
                 </div>    
                 </div>
-          <div text-center>
-          <button ion-button class="radius-but" color="namaeto" (click)="editCustomer()">แก้ไขข้อมูล</button>
-        </div>        
+
+                   
+  </ion-card-content>
+
+</div>
 </ion-content>

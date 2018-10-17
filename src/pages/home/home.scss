@@ -11,8 +11,7 @@ page-home {
     position: relative; 
     z-index: 1; /* The z-index should be higher than Google Maps */
     width: 290px;
-    margin: 60px auto 0;
-    margin-top: -1px;
+    margin:auto;
     //background: black;
     height: auto;
     opacity: 100%; /* Set the opacity for a slightly transparent Google Form */ 
@@ -30,4 +29,67 @@ page-home {
     opacity: 100%; /* Set the opacity for a slightly transparent Google Form */ 
     //color: white;
   }
+
+  .search-input{
+    border-radius:10px;
+    height: 40px;
+   
+  }
+
+  .search-input-align{
+    margin-left:10px;
+    margin-top:-5px
+  }
+  
+  .type-card-style{
+    border-radius:10px;
+    margin:auto;
+    width: 100%;
+  }
+
 }
+
+////// test
+.selector {
+  font-family: SFNSDisplay;
+  font-size: 17px;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+  color:white;
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-content: center;
+  border: solid 2px #F26730;
+  background-color: #F26730;
+  text-align: center;
+}
+.option {
+  font-family: SFNSDisplay;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+  color: black;
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-content: center;
+  height: 20px;
+}
+
+ion-option .list{
+  font-family: SFNSDisplay;
+  font-size: 8px !important;
+  max-width: 100% !important;
+}
+.ion-option-items .item{
+  font-family: SFNSDisplay;
+  font-size: 8px !important;
+  max-width: 100% !important;
+}
+.select-popover {
+  font-family: SFNSDisplay !important;
+  font-size: 8px !important;
+  max-width: 100% !important;
+}
+
+select#gender option[value="male"]   { background-image:url(../../assets/imgs/moto.png);   }
+select#gender option[value="female"] { background-image:url(female.png); }

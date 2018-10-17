@@ -39,7 +39,8 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  namaeto:    #F26730
+  namaeto:    #F26730,
+  cardpro:     #fc9e79
 
 );
 
@@ -86,10 +87,15 @@ $colors: (
 // Fonts
 // --------------------------------------------------
 
-//@import "roboto";
-//@import "noto-sans";
+// @import "roboto";
+// @import "noto-sans";
 
-@import url('https://fonts.googleapis.com/css?family=Mitr');
+// @import url('https://fonts.googleapis.com/css?family=Mitr');
+// *{
+//   font-family: 'Mitr', sans-serif;
+// }
+
+@import url('https://fonts.googleapis.com/css?family=Kanit:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=thai');
 *{
-  font-family: 'Mitr', sans-serif;
+  font-family: 'Kanit', sans-serif;
 }

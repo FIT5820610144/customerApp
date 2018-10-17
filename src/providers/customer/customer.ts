@@ -17,12 +17,15 @@ export class CustomerProvider {
 
   tel = "";
   data:any;
-  ip:any
-  private _url:string = "http://localhost/namaetoDB/CustApp/login.php";
+  url:any
+  private _url:string;
 //  private _Gurl:string = "https://514d472c.ngrok.io/namaetoDB/CustApp/login.php";
 
   constructor(public http: Http,public globalVar: GlobalVariableProvider) {
     console.log('Hello CustomerProvider Provider');
+    this.url = this.globalVar.localhost
+    console.log("url customer = "+this.url)
+    this._url = "http://"+this.url+"/namaetoDB/CustApp/getCustomer.php";
   }
   
   getUser(){

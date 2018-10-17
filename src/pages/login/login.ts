@@ -79,9 +79,9 @@ export class LoginPage {
             subTitle: 'ไม่สามารถเข้าสู่ระบบได้',
             buttons: [{
               text: 'ตกลง',
-              // handler: data=>{
+               handler: data=>{
               //     this.navCtrl.setRoot(LoginPage);
-              // }
+               }
             }]
           }); alert.present();
         }

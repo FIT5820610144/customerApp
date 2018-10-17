@@ -52,9 +52,9 @@ export class CommentPage {
           buttons: [{
             text: 'ตกลง',
             handler: data=>{
-                  this.viewCtrl.dismiss().then(() => {
-                    this.app.getRootNav().setRoot(HomePage);
-                });
+              this.viewCtrl.dismiss().then(() => {
+                this.app.getRootNav().setRoot(HomePage);
+            });
             }
           }]
         });

@@ -1,27 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GlobalVariableProvider } from '../global-variable/global-variable';
 import 'rxjs/add/operator/map';
 import { Http , Headers , RequestOptions,Response } from '@angular/http';
-//import { Http,Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-/*
-  Generated class for the CallingProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+
 @Injectable()
 export class CallingProvider {
-  private _url:string = "http://localhost/namaetoDB/CustApp/accepted.php";
+  public url:AnalyserNode;
+  private _url:string;
+  
 
-  constructor(public http: Http) {
+  constructor(public http: Http,public globalVar: GlobalVariableProvider) {
     console.log('Hello CallingProvider Provider');
+    this.url = this.globalVar.localhost
+    this._url = "http://"+this.url+"/namaetoDB/CustApp/accepted.php";
   }
 
   toCalling(cust_ssn,Start,End,call_status,distance,fare){
-    //var url = "https://a24f251f.ngrok.io/namaetoDB/CustApp/callingdb.php";
-    var url = "http://localhost/namaetoDB/CustApp/callingdb.php";
+   
+    var url = "http://"+this.url+"/namaetoDB/CustApp/callingdb.php";
     let body = new FormData();
     body.append('cust_ssn',cust_ssn);
     body.append('Start',Start);
@@ -36,7 +36,7 @@ export class CallingProvider {
   }
 
   saveCallingRec(Start,End,cust_ssn,fare){
-    var url = "http://localhost/namaetoDB/CustApp/custCallingRecord.php";
+    var url = "http://"+this.url+"/namaetoDB/CustApp/custCallingRecord.php";
     let body = new FormData();
     body.append('Start',Start);
     body.append('End',End);
@@ -64,6 +64,15 @@ export class CallingProvider {
   finished(){
     return this.http.get(this._url)
           .map((response:Response)=> response.json());
+  }
+
+  custCancle(cust_cancle){
+    var url = "http://"+this.url+"/namaetoDB/CustApp/callingCancleApi.php";
+    let body = new FormData();
+    body.append('cust_cancle',cust_cancle);
+  
+    var response = this.http.post(url,body).map(res=>res.json());
+    return response ;
   }
 
 

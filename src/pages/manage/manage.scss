@@ -13,19 +13,22 @@ page-manage {
     margin-left:13%;
     margin-top: 10%;
 }
-.shadow{
-    height:10rem;
-    width:10rem;
-    margin-bottom: -50%;
-    
+.shadow
+{
+    position: relative;
+    border-radius:50%;
+    border:5px solid white;
+    height:13rem;
+    width:13rem;
+    margin:auto;
+   // margin-top: 10%;  
 }
 
 .text-margin{
-    font-size: 20px;
-    margin-left: 7%;
-    margin-top: 5%;
+    font-size: 50px;
+    margin:auto;
     color: black;
-    font-weight: bold;
+    //font-weight: bold;
 }
 .bt-size
 {
@@ -41,7 +44,37 @@ page-manage {
 }
 .mycard{
     border-radius: 15px;
+    background-color: #c5c5c5;
+    font-size: 40px;
 }
 .radius-but{
     border-radius: 50px;
 }
+.pro-card{
+    color:#fc9e79;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.bottom-right {
+    position: absolute;
+    bottom: 0px;
+    margin-left:48%;
+    font-size:20px;
+    color:black;
+}
+
+.bg-image{
+    background-image: url('../../assets/imgs/bgmain2.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+ion-content{
+    position: absolute;
+}
+
