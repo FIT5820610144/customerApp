@@ -14,7 +14,7 @@ export class LoginProvider {
   //   ]
   // }
   constructor(public http: Http) {
-    this._url = "http://192.168.136.202/namaetoDB/CustApp/login.php";
+    this._url = "http://localhost/namaetoDB/CustApp/login.php";
   }
 
   doLogin(tel){

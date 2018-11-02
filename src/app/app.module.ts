@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 //--------- pages -------- //
 import { MyApp } from './app.component';
@@ -20,6 +21,7 @@ import { MainPage } from '../pages/main/main';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { EditCustomerPage } from '../pages/edit-customer/edit-customer'
+import { DriverListPage } from '../pages/driver-list/driver-list'
 
 //--------------- Providers -------------------//
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -45,6 +47,7 @@ import { DeletedataProvider } from '../providers/deletedata/deletedata';
     LoginPage,
     RegisterPage,
     ListPage,
+    DriverListPage,
 
   ],
   imports: [
@@ -52,6 +55,7 @@ import { DeletedataProvider } from '../providers/deletedata/deletedata';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    Ionic2RatingModule
   //   AgmCoreModule.forRoot({
   //     apiKey: "AIzaSyBWSUebxgKZO0lx_cm7J8kkZT08NyA8hkk",
   //     libraries: ["places"]
@@ -68,6 +72,7 @@ import { DeletedataProvider } from '../providers/deletedata/deletedata';
     LoginPage,
     RegisterPage,
     AboutPage,
+    DriverListPage,
   ],
   providers: [
     StatusBar,

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, AlertController, ModalController, ModalOptions,ActionSheetController  } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { ImagePicker } from '@ionic-native/image-picker';
+import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { CustomerProvider } from '../../providers/customer/customer';
@@ -42,6 +42,7 @@ export class ManagePage {
   public LoadingCtrl: LoadingController,
   public alertCtrl: AlertController,
   public http: Http,
+  private storage: Storage,
   private camera: Camera,
   public modalCtrl: ModalController,
   public actionSheetCtrl: ActionSheetController) {
@@ -91,6 +92,11 @@ export class ManagePage {
       spinner : 'circles'
     });
     loading.present();
+    var tel
+    this.storage.get("getTel").then(val=>{
+      tel = val
+    })
+    console.log("tel = ",tel)
     this.custProvider.getUser()
     .subscribe(data =>{
       this.userList = data

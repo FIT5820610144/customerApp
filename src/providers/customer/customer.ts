@@ -33,12 +33,14 @@ export class CustomerProvider {
            .map((response:Response)=> response.json());
    }
 
-  //  getUrl(){
-  //    this.globalVar.getIP().subscribe(data=>{
-  //       data = this.ip;      
-  //       console.log("IP = ") 
-  //    })
-  //  }
+  // getUser(tel){
+  //     var url = this._url
+  //     let body = new FormData();
+  //     body.append('tel',tel);
+  
+  //     var response = this.http.post(url,body).map(res=>res.json());
+  //     return response ;
+  // }
 
 
 

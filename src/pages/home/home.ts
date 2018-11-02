@@ -1,12 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ModalController, ModalOptions,AlertController,ViewController,App } from 'ionic-angular';
+import { NavController, ModalController, ModalOptions,AlertController,ViewController,App,NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CallingProvider } from '../../providers/calling/calling'
-import { Storage } from '@ionic/storage';
-import { } from '@agm/core';
+import { Storage } from '@ionic/storage';                                                                                                                                                                                                                                                                                    
 import { CustomerProvider } from '../../providers/customer/customer'
 import { CallNumber } from '@ionic-native/call-number';
 import { ManagePage } from '../manage/manage';
+import { DriverListPage } from '../driver-list/driver-list';
 
 
 declare var google: any;
@@ -41,6 +41,8 @@ export class HomePage {
   noplace:any;
   _url:any;
   myAccept:any
+  call:any = 'uncall'
+  pickupInterval:any;
   
   @ViewChild('map') mapRef: ElementRef;
   map: any;
@@ -54,8 +56,10 @@ export class HomePage {
               private callNumber: CallNumber,
               private alertCtrl: AlertController,
               public viewCtrl:ViewController,
-              private app:App) {   
+              private app:App,
+              public params: NavParams) {   
               this._url = this.custProvider.url
+              
   
   }
 
@@ -70,10 +74,11 @@ export class HomePage {
 
   //----- get all vehicle data from database for adding to calling database when called --//
   getVehicles(){
-    this.callingCtrl.getVehicle()
+    this.callingCtrl.accept()
     .subscribe(data =>{
       this.vehicleList = data
       this.driver_img = data[0].dri_pic;
+      console.log("driver_img = ",this.driver_img)
       this.vehicle_number = data[0].veh_number;
       this.vehicle_brand = data[0].veh_brand;
       this.vehicle_color = data[0].veh_color;
@@ -91,7 +96,6 @@ export class HomePage {
       this.userList = data
       this.cust_ssn = data[0].cust_ssn;
       this.cust_img = data[0].cust_img;
-     
     })
   }
 
@@ -106,66 +110,113 @@ export class HomePage {
       console.log("driver action = "+gacc)
     }
   }
+  toCalling(){
+    this.navCtrl.push(DriverListPage,{
+      cust_ssn: this.cust_ssn,
+       Start: this.Start,
+       End:this.End,
+       call_status:this.call_status,
+       distance:this.distance,
+       fare:this.fare,
+       cust_lat: this.clat,
+       cust_lng:this.clng
+    })
+  }
 
   //------ calling function ---//
   isCalling(accept){
-    //// ----- ถ้าไม่อัพโหลดรูปไม่สามรถทำการเรียกรถได้ ----//
-    if(this.cust_img == null){
-      let alert = this.alertCtrl.create({
-        title: 'Warning!!',
-        subTitle: 'คุณไม่สามารถเรียกรถได้ กรุณาอัพโหลดรูปภาพเพื่อยืนยันตัวตน',
-        buttons: [{
-          text: 'ตกลง',
-          handler: data=>{
-            this.navCtrl.setRoot(ManagePage);
-          }
-        }]
-      });
-      alert.present();
-    }
-    
-    //this.checkNullimg();
-    else if(accept == null){
-      this.callingCtrl.toCalling(this.cust_ssn,this.Start,this.End,this.call_status,this.distance,this.fare).subscribe(data=>{
-        
-        this.getaccept = setInterval(()=>{
+    // ----- ถ้าไม่อัพโหลดรูปไม่สามรถทำการเรียกรถได้ ----//
+      // if(this.cust_img == null){
+      //   let alert = this.alertCtrl.create({
+      //     title: 'Warning!!',
+      //     subTitle: 'คุณไม่สามารถเรียกรถได้ กรุณาอัพโหลดรูปภาพเพื่อยืนยันตัวตน',
+      //     buttons: [{
+      //       text: 'ตกลง',
+      //       handler: data=>{
+      //         this.navCtrl.setRoot(ManagePage);
+      //       }
+      //     }]
+      //   });
+      //   alert.present();
+      // }
+      
+      //this.checkNullimg();
+     if(accept == null){
+      // this.callingCtrl.toCalling(this.cust_ssn,this.Start,this.End,this.call_status,this.distance,this.fare).subscribe(data=>{
+        this.storage.remove("calling")
+      
+        let acceptInterVal = setInterval(()=>{
           this.callingCtrl.accept().subscribe(data=>{ //รับค่า accept
             this.getAccept(data[0].dri_action)  //ส่ง driver_action ไปยังฟังก์ชั่น getAceept
             if(data[0].dri_action == 'accepted'){
-            clearInterval(this.getaccept)
+              this.getVehicles();
+              clearInterval(acceptInterVal)
             }else if(data[0].dri_action == 'cancled'){
-            clearInterval(this.getaccept)
+            clearInterval(acceptInterVal)
             }
           })
         },3000)
 
-        this.getaccept2 = setInterval(()=>{
+          let finishInterVal = setInterval(()=>{
           this.callingCtrl.finished().subscribe(data=>{ //รับค่า finish
-            console.log("cust_cancle = "+data[0].cust_cancle)
+            console.log("pick up = ",data[0].pickup)
             this.finished = data[0].finished;
             if(data[0].finished == 'finished'){
               if(data[0].cust_cancle == 1){
-                clearInterval(this.getaccept2)
+                clearInterval(finishInterVal)
               }else{
               this.saveCallingRecord();
               this.myModal3.present();
-              clearInterval(this.getaccept2);
+              clearInterval(finishInterVal);
               this.showstatus = false;
               this.cancelBtn = false;
             }
             }
           })
         },3000)
-      });
+
+        this.pickupInterval = setInterval(()=>{
+          this.callingCtrl.accept().subscribe(data=>{
+            if(data[0].pickup == '1'){
+              console.log("picked up");
+              const confirm = this.alertCtrl.create({
+                title: 'Pick UP!!',
+                message: 'คนขับรถได้รับคุณแล้ว??',
+                buttons: [
+                  {
+                    text: 'ไม่ใช่',
+                    handler: () => {
+                     // console.log('Disagree clicked');
+                    }
+                  },
+                  {
+                    text: 'ใช่',
+                    handler: () => {
+                      this.cancelBtn = false
+                    }
+                  }
+                ]
+              });
+              confirm.present();
+              clearInterval(this.pickupInterval)
+          }
+          }); 
+        },3000)
+      
+      // });
      const myModalOptions: ModalOptions = {
         enableBackdropDismiss:false,
         cssClass:"my-modal"
      }
      
-     this.myModal1 =  this.modalCtrl.create('CallingPage',{},myModalOptions)
+     this.myModal1 =  this.modalCtrl.create('CallingPage',{
+       
+     })
      this.myModal2 =  this.modalCtrl.create('DriveracceptedPage')
      this.myModal3 =  this.modalCtrl.create('CommentPage')
      this.myModal1.present();
+     //this.navCtrl.push(DriverListPage)
+
     
     }else if(accept == 'accepted'){
       this.myModal1.dismiss();
@@ -183,18 +234,37 @@ export class HomePage {
 
   //---- บันทึกข้อมูลการเรียกรถเมื่อการเรียกรถเสร็จสิ้น -----//
   saveCallingRecord(){
-      this.callingCtrl.saveCallingRec(this.Start,this.End,this.cust_ssn,this.fare).subscribe(data=>{
+
+    var forigin =  this.params.get("forigin");
+    var fdestination = this.params.get("fdestination");
+    var fdri_ssn = this.params.get("fdri_ssn");
+    console.log("forigin = ",forigin)
+    console.log("fdestination = ",fdestination)
+    console.log("fdri_ssn = ",fdri_ssn)
+
+      this.callingCtrl.saveCallingRec(forigin,fdestination,this.cust_ssn,this.fare,fdri_ssn).subscribe(data=>{
       })
   }
 
 //////------Google Maps------///////
+
+getCurrentPlace(clat,clng){
+  let geocoder = new google.maps.Geocoder;
+  let latlng = {lat: clat, lng: clng};
+  geocoder.geocode({'location': latlng}, (results, status) => {
+     console.log(results[1].address_components[0].short_name); // read data from here
+    this.Start = results[1].address_components[0].short_name;
+     console.log(status);
+  });
+}  
+
    calculateAndDisplayRoute(clat,clng) {  
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var firstPosition = {lat:clat,lng:clng};
 
         
-        this.getaccept = setInterval(()=>{
+          let getDistanceInterVal = setInterval(()=>{
           var distance = localStorage.getItem("km");
           this.distance = distance;
          },100)
@@ -212,14 +282,9 @@ export class HomePage {
         var marker = new google.maps.Marker({
           position: firstPosition,
           map: map,
-          icon: 'assets/imgs/maker.gif',
+          icon: 'assets/imgs/pin.png',
         });
-         
         
-        
-      function addMakersMap(dri_lat){
-        console.log("dri_lat = "+dri_lat)
-       }
      
        directionsDisplay.setMap(map);
         directionsService.route({
@@ -244,7 +309,7 @@ export class HomePage {
   }
   noplaceChek(){
     
-    this.getaccept = setInterval(()=>{
+      let noplaceCheckITV = setInterval(()=>{
       this.noplace = localStorage.getItem("place");
       if(this.noplace == "noplace"){
         let alert = this.alertCtrl.create({
@@ -263,7 +328,7 @@ export class HomePage {
       }else{
         this.showType = true;
       }
-      clearInterval(this.getaccept);
+      clearInterval(noplaceCheckITV);
      },100)
     
   }
@@ -272,7 +337,7 @@ export class HomePage {
     this.vehicles = $event
   }
   calculateFare(){
-    this.getaccept = setInterval(()=>{
+    let callculateITV = setInterval(()=>{
       var dist = this.distance
       var dFare = 5
       if(this.vehicles == 1){
@@ -288,7 +353,7 @@ export class HomePage {
 
   typeimgChng(){
   
-    this.getaccept = setInterval(()=>{
+      let typeimgITV = setInterval(()=>{
       this.typeimg = 'moto.png';
       if(this.vehicles == 1){
         this.typeimg = 'tuktuk.png';
@@ -303,11 +368,20 @@ export class HomePage {
         this.clng = pos.coords.longitude
         var fare = 0
         this.calculateAndDisplayRoute(this.clat,this.clng);
+        this.getCurrentPlace(this.clat,this.clng)
       }).catch(err => console.log(err)); 
       this.getUser();
-      this.getVehicles();
       this.calculateFare();
       this.typeimgChng();
+      console.log("calling = ",this.params.get('calling'))
+      this.storage.get('calling').then(val=>{
+        if(val == 'called'){
+          this.isCalling(null)
+        }
+      })
+
+      this.driverPickup();
+      
   }
 
   showTypefunc(){
@@ -318,10 +392,20 @@ export class HomePage {
   }
 
   cancleCalling(){
+    const confirm = this.alertCtrl.create({
+      title: 'Cancle!!',
+      message: 'ยืนยันการยกเลิก',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          handler: () => {
+           // console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'ยืนยัน',
+          handler: () => {
     this.callingCtrl.custCancle(this.cust_cancle).subscribe(data =>{
-     
-      
-      console.log(data.status)
       if(data.status == "success"){
         let alert = this.alertCtrl.create({
           title: 'cancle',
@@ -335,21 +419,21 @@ export class HomePage {
         });
         alert.present();
       }
-      // }else {
-      //   let alert = this.alertCtrl.create({
-      //     title: 'login',
-      //     subTitle: 'ไม่สามารถเข้าสู่ระบบได้',
-      //     buttons: [{
-      //       text: 'ตกลง',
-      //       // handler: data=>{
-      //       //     this.navCtrl.setRoot(LoginPage);
-      //       // }
-      //     }]
-      //   }); alert.present();
-      // }
     }
   )
+          }
+        }
+      ]
+    });
+    confirm.present();
+    
   }
   
+  driverPickup(){
+    this.callingCtrl.accept().subscribe(data=>{
+      //console.log("dri_pickup = ",data)
+    })
+  }
+
       
 }

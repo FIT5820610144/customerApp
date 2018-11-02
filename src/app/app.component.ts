@@ -43,18 +43,18 @@ export class MyApp {
     public custProvider : CustomerProvider,
     public globalVar: GlobalVariableProvider) {
 
-      this.storage.get('islogon').then((val) => {
-        if(val == true) {
-         this.refresh();
-          }
-        });
+      // this.storage.get('islogon').then((val) => {
+      //   if(val == true) {
+      //    this.refresh();
+      //     }
+      //   });
     
       this.url = this.globalVar.localhost
       console.log("url component = "+this.url)
 
     this.initializeApp();
     this.ionViewDidLoad();
-    this.refresh();
+    //this.refresh();
 
     this.pages = [
       { title: 'จัดการข้อมูล', component: ManagePage, icon: "ios-contact"},
@@ -79,7 +79,7 @@ export class MyApp {
     } else {
       this.storage.clear().then(()=>{
         this.nav.setRoot(LoginPage)
-        window.location.reload();
+        //window.location.reload();
       });
     }
 }

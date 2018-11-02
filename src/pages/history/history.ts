@@ -51,8 +51,6 @@ export class HistoryPage {
       this.cust_ssn = data[0].cust_ssn
             this.recordProvider.getRecord(this.cust_ssn).subscribe(data=>{
             this.recordList = data
-
-            console.log("list = "+this.recordList)
               
               var i = 0;
               var myfare = []

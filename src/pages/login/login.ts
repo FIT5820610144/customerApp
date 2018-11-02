@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App,ToastController  } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { AlertController } from 'ionic-angular';
 
@@ -30,7 +30,8 @@ export class LoginPage {
     public custCtrl: CustomerProvider,
     private alertCtrl: AlertController,
     private storage: Storage,
-    private appCtrl:App) {
+    private appCtrl:App,
+    public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -60,30 +61,41 @@ export class LoginPage {
         if(data.status == "success"){
           this.storage.set('islogon',true);
           this.storage.set('getTel',tel)
-          let alert = this.alertCtrl.create({
-            title: 'Login',
-            subTitle: 'เข้าสู่ระบบสำเร็จ',
-            buttons: [{
-              text: 'ตกลง',
-              handler: data=>{
-                this.navCtrl.setRoot(HomePage);
-              }
-            }]
+          // let alert = this.alertCtrl.create({
+          //   title: 'Login',
+          //   subTitle: 'เข้าสู่ระบบสำเร็จ',
+          //   buttons: [{
+          //     text: 'ตกลง',
+          //     handler: data=>{
+          //       this.navCtrl.setRoot(HomePage);
+          //     }
+          //   }]
+          // });
+          // alert.present();
+
+          const toast = this.toastCtrl.create({
+            message: 'เข้าสู่ระบบสำเร็จ',
+            duration: 3000,
+            position: 'top',
+            cssClass: 'toast-success'
           });
-          alert.present();
+          toast.present();
+          toast.onDidDismiss(() => {
+            this.navCtrl.setRoot(HomePage);
+          });
           //window.location.reload();
 
         }else {
-          let alert = this.alertCtrl.create({
-            title: 'login',
-            subTitle: 'ไม่สามารถเข้าสู่ระบบได้',
-            buttons: [{
-              text: 'ตกลง',
-               handler: data=>{
-              //     this.navCtrl.setRoot(LoginPage);
-               }
-            }]
-          }); alert.present();
+          const toast = this.toastCtrl.create({
+            message: 'เข้าสู่ระบบไม่สำเร็จ',
+            duration: 3000,
+            position: 'top',
+            cssClass: 'toast-fail'
+          });
+          toast.present();
+          toast.onDidDismiss(() => {
+           this.navCtrl.setRoot(LoginPage);
+          });
         }
       }
     )

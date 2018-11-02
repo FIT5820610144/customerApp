@@ -19,7 +19,7 @@ export class CallingProvider {
     this._url = "http://"+this.url+"/namaetoDB/CustApp/accepted.php";
   }
 
-  toCalling(cust_ssn,Start,End,call_status,distance,fare){
+  toCalling(cust_ssn,Start,End,call_status,distance,fare,dri_ssn){
    
     var url = "http://"+this.url+"/namaetoDB/CustApp/callingdb.php";
     let body = new FormData();
@@ -29,19 +29,21 @@ export class CallingProvider {
     body.append('distance',distance);
     body.append('fare',fare);
     body.append('call_status',call_status);
+    body.append('dri_ssn',dri_ssn);
     
     var response = this.http.post(url,body).map(res=>res.json());
     return response ;
 
   }
 
-  saveCallingRec(Start,End,cust_ssn,fare){
+  saveCallingRec(Start,End,cust_ssn,fare,dri_ssn){
     var url = "http://"+this.url+"/namaetoDB/CustApp/custCallingRecord.php";
     let body = new FormData();
     body.append('Start',Start);
     body.append('End',End);
     body.append('fare',fare);
     body.append('cust_ssn',cust_ssn);
+    body.append('dri_ssn',dri_ssn);
   
     var response = this.http.post(url,body).map(res=>res.json());
     return response ;
@@ -73,6 +75,11 @@ export class CallingProvider {
   
     var response = this.http.post(url,body).map(res=>res.json());
     return response ;
+  }
+
+  getDriverActive(){
+    return this.http.get("http://"+this.url+"/namaetoDB/CustApp/getDriverActive.php")
+    .map((response:Response)=> response.json());
   }
 
 

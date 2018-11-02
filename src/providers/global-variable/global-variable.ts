@@ -13,7 +13,7 @@ export class GlobalVariableProvider {
   public localhost:any;
   constructor(public http: Http) {
     console.log('Hello GlobalVariableProvider Provider');
-    this.localhost = '192.168.136.202';
+    this.localhost = 'localhost';
   }
 
 }

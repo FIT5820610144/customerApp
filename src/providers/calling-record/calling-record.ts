@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http , Headers , RequestOptions,Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { GlobalVariableProvider } from '../global-variable/global-variable';
 
 /*
